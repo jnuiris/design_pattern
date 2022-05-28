@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>惰性单例模式</title>
+</head>
+<body>
+<button id="btn">点击</button>
+<script>
+    // todo:这个单例模式demo存在问题，需要排查
+    let getSingleton = function (fn) {
+        let result
+        console.log(result)
+        return function () {
+            console.log(11)
+            console.log(result)
+            return result || (result = fn.apply(this, arguments))
+        }
+    }
+    let createAlertMessage = function (html) {
+        var div = document.createElement('div')
+        div.innerHTML = html
+        div.style.display = 'none'
+        document.body.appendChild(div)
+        return div
+    }
+
+    const btn = document.getElementById('btn')
+
+    btn.addEventListener('click', function () {
+        let createSingleAlertMessage = getSingleton(createAlertMessage)
+        let alertMessage = createAlertMessage('您的知识需要付费充值! ')
+        alertMessage.style.display = 'block'
+    })
+</script>
+</body>
+</html>

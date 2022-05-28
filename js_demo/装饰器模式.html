@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>装饰器模式</title>
+</head>
+<body>
+<script>
+    const log = (target, name, descriptor) => {
+        var oldValue = descriptor.value
+        descriptor.value = function () {
+            console.log(`Calling ${name} with`, arguments)
+            return oldValue.apply(this, arguments)
+        }
+        return descriptor
+    }
+
+    class Math {
+        @log
+        plus(a, b) {
+            return a + b
+        }
+    }
+
+    const math = new Math()
+
+    math.add(1, 2)
+</script>
+</body>
+</html>
